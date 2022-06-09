@@ -2,16 +2,18 @@ function Test-ADCredential {
     [CmdletBinding()]
     Param
     (
+        [string]$Server
         [string]$UserName,
         [string]$Password
     )
+    #$Server   = '54.78.59.220:3490'
     #$UserName = 'proveedor-1'
     #$Password = 'e8PTZGQB6DUUrAKN()ax'
     if (!($UserName) -or !($Password)) {
         Write-Warning 'Test-ADCredential: Please specify both user name and password'
     } else {
         Add-Type -AssemblyName System.DirectoryServices.AccountManagement
-        $DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('domain')
+        $DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext($server)
         $DS.ValidateCredentials($UserName, $Password)
     }
 }
